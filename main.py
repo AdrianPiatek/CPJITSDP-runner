@@ -3,6 +3,7 @@ import subprocess
 from subprocess import STDOUT, PIPE
 import configparser
 import argparse
+import sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-tn", "--test_number")
@@ -10,9 +11,15 @@ args = parser.parse_args()
 number_of_tests = int(args.test_number) if args.test_number else 10
 
 config = configparser.ConfigParser()
-config.read('config.ini')
-project_path = config['config']['project_path']
-java_path = config['config']['java_path']
+try:
+    config.read('config.ini')
+    project_path = config['config']['project_path']
+    java_path = config['config']['java_path']
+except KeyError:
+    with open('config.ini', 'w') as f:
+        f.write('[config]\nproject_path = \njava_path = ')
+    print("Config has been created, fill it. Example values:\n./../M10/CPJITSDP\njava")
+    sys.exit("--no config found, exiting--")
 
 arrId = '0'
 ens = '20'
