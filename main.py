@@ -34,9 +34,9 @@ java_class_path = f'{project_path}/bin;' \
 
 def create_cmd_command(exp, dataset):
     command = [java_path, '-cp', java_class_path, f'cpjitsdpexperiment.{exp}', dataset, arrId, ens, theta, waitingTime]
-    if exp == 'ExpFilter':
+    if exp == 'ExpFilter' or exp == 'ExpOPFilter':
         command.append(filterParams)
-    if exp == 'ExpFilter' or exp == 'ExpOPAIO':
+    if exp != 'ExpAIO':
         command.append(paramsORB)
     return command
 
@@ -85,5 +85,5 @@ def run_tests(exp, dataset):
 
 if __name__ == '__main__':
     for experiment in experiments:
-        for datasets in datasetsName:
-            run_tests(experiment, datasets)
+        for idx in range(len(datasetsName)):
+            run_tests(experiment, idx)
