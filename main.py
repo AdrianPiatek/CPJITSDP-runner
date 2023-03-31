@@ -1,10 +1,19 @@
 import datetime
 import subprocess
 from subprocess import STDOUT, PIPE
+import configparser
+import argparse
 
-project_path = 'C:/Users/adria/IdeaProjects/CPJITSDP'
-java_path = 'C:/Users/adria/.jdks/openjdk-19/bin/java'
-number_of_tests = 1
+parser = argparse.ArgumentParser()
+parser.add_argument("-tn", "--test_number")
+args = parser.parse_args()
+number_of_tests = int(args.test_number) if args.test_number else 10
+
+config = configparser.ConfigParser()
+config.read('config.ini')
+project_path = config['config']['project_path']
+java_path = config['config']['java_path']
+
 arrId = '0'
 ens = '20'
 theta = '0.99'
@@ -12,6 +21,7 @@ waitingTime = '90'
 filterParams = '500;50;0.7;500'
 # /*** Use only for ORB ***/
 paramsORB = '100;0.4;10;12;1.5;3'
+
 datasetsName = ["tomcat", "JGroups", "spring-integration", "camel", "brackets",
                 "nova", "fabric8", "neutron", "npm", "BroadleafCommerce"]
 # experiments = ['ExpAIO', 'ExpFilter', 'ExpOPAIO', 'ExpOPFilter']
