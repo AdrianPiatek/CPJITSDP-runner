@@ -6,9 +6,11 @@ import argparse
 import sys
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-tn", "--test_number")
+parser.add_argument("-n", "--test_number", default=10)
+parser.add_argument("-e", "--experiment", default='all')
+parser.add_argument("-d", "--dataset", default='all')
 args = parser.parse_args()
-number_of_tests = int(args.test_number) if args.test_number else 10
+number_of_tests = int(args.test_number)
 
 config = configparser.ConfigParser()
 try:
@@ -31,8 +33,8 @@ paramsORB = '100;0.4;10;12;1.5;3'
 
 datasetsName = ["tomcat", "JGroups", "spring-integration", "camel", "brackets",
                 "nova", "fabric8", "neutron", "npm", "BroadleafCommerce"]
-# experiments = ['ExpAIO', 'ExpFilter', 'ExpOPAIO', 'ExpOPFilter']
-experiments = ['ExpAIO', 'ExpFilter', 'ExpOPAIO']
+experiments = ['ExpOPFilter', 'ExpAIO', 'ExpFilter', 'ExpOPAIO', 'ExpOPFilter']
+#experiments = ['ExpAIO', 'ExpFilter', 'ExpOPAIO']
 average_data = []
 java_class_path = f'{project_path}/bin;' \
                   f'{project_path}/lib/joda-time-2.9.9.jar;' \
