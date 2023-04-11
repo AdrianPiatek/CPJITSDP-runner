@@ -95,9 +95,12 @@ def run_tests(exp, dataset):
     results = [0, 0, 0, 0]
     for _ in range(number_of_tests):
         data = run_java(exp, str(dataset))
-        data = extract_data(data)
-        print(data)
-        results = [res + val for res, val in zip(results, data)]
+        try:
+            data = extract_data(data)
+            print(data)
+            results = [res + val for res, val in zip(results, data)]
+        except ValueError or TypeError:
+            print(f'Value error for {exp} {datasetsName[dataset]} \n {data}')
     results = [res / number_of_tests for res in results]
     write_to_file(results, exp, datasetsName[dataset])
 
